@@ -2,6 +2,17 @@
 Ex :  (i) https://codeforces.com/problemset/problem/1709/D
 
 ll maxArr[4*N], a[N];
+
+void PointUpdate(ll si , ll ss , ll se , ll qi) {
+        if(ss == se) {
+            maxArr[si] = a[ss];
+            return;
+        }
+        ll mid = (ss+se)>>1;
+        if(qi <= mid) PointUpdate(2*si , ss , mid , qi);
+        else PointUpdate(2*si+1, mid+1 , se , qi);
+        maxArr[si] = max(Tree[2*si],Tree[2*si+1]);
+}
  
 ll Query(ll si, ll ss, ll se, ll li, ll ri) {
         if(li>se || ri<ss) {
