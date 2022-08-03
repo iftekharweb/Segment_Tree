@@ -8,7 +8,7 @@ void RangeUpdate(ll si , ll ss , ll se , ll li , ll ri , ll val) {
         if(lazy[si]) {
             ll dx = lazy[si];
             lazy[si] = 0;
-            Tree[si] = dx*(se-ss+1);
+            Tree[si] += dx*(se-ss+1);
             if(ss != se) {
                 lazy[2*si] += dx;
                 lazy[2*si+1] += dx;
