@@ -7,3 +7,4 @@
   https://codeforces.com/contest/381/problem/E
   https://codeforces.com/problemset/problem/276/C
   https://codeforces.com/problemset/problem/960/B
+  https://codeforces.com/contest/52/problem/C
