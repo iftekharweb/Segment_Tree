@@ -66,63 +66,60 @@ void BuildTree(ll si , ll ss , ll se) {
 
 2. 
         
-void RangeUpdate(int si , int ss , int se , int li , int ri , int val,vector<int>& Tree,vector<int>& lazy) {
-        // Is there any pending update? 
-        if(lazy[si]) {
-            int dx = lazy[si];
-            lazy[si] = 0;
-            Tree[si] += dx*(se-ss+1);
+void RangeUpdate(ll si , ll ss , ll se , ll li , ll ri , ll val, vector<ll>& Tree, vector<ll>& Lazy) {
+        if(Lazy[si]) {
+            ll dx = Lazy[si];
+            Lazy[si] = 0;
+            Tree[si] = dx*(se-ss+1);
             if(ss != se) {
-                lazy[2*si] += dx;
-                lazy[2*si+1] += dx;
+                Lazy[2*si] = dx;
+                Lazy[2*si+1] = dx;
             }
         }
-        // Do the rest..
         if(li>se || ri<ss) return;
         if(li<=ss && ri>=se) {
-            int dx = val * (se-ss+1);
-            Tree[si] += dx;
+            ll dx = val * (se-ss+1);
+            Tree[si] = dx;
             if(ss != se) {
-                lazy[2*si] += val;
-                lazy[2*si+1] += val;
+                Lazy[2*si] = val;
+                Lazy[2*si+1] = val;
             }
             return;
         }
-        int mid = (ss+se)>>1;
-        RangeUpdate(2*si, ss, mid , li , ri , val,Tree,lazy);
-        RangeUpdate(2*si+1, mid+1 , se , li , ri , val,Tree,lazy);
+        ll mid = (ss+se)>>1;
+        RangeUpdate(2*si, ss, mid , li , ri , val, Tree, Lazy);
+        RangeUpdate(2*si+1, mid+1 , se , li , ri , val, Tree, Lazy);
         Tree[si] = Tree[2*si]+Tree[2*si+1];
         return;
 }
  
-int Query(int si , int ss, int se , int li , int ri, vector<int>& Tree,vector<int>& lazy) {
-        // Is there any pending update? 
-        if(lazy[si]) {
-            int dx = lazy[si];
-            lazy[si] = 0;
-            Tree[si] += dx*(se-ss+1);
+ll Query(ll si , ll ss, ll se , ll li , ll ri, vector<ll>& Tree, vector<ll>& Lazy) {
+        if(Lazy[si]) {
+            ll dx = Lazy[si];
+            Lazy[si] = 0;
+            Tree[si] = dx*(se-ss+1);
             if(ss != se) {
-                lazy[2*si] += dx;
-                lazy[2*si+1] += dx;
+                Lazy[2*si] = dx;
+                Lazy[2*si+1] = dx;
             }
         }
-        // Do the rest..
         if(li>se || ri<ss) return 0;
         if(li<=ss && ri>=se) {
             return Tree[si];
         }
-        int mid = (ss+se)>>1;
-        return Query(2*si, ss , mid , li , ri,Tree,lazy) + Query(2*si+1, mid+1, se, li, ri,Tree,lazy);
+        ll mid = (ss+se)>>1;
+        return Query(2*si, ss , mid , li , ri,Tree, Lazy) + Query(2*si+1, mid+1, se, li, ri, Tree, Lazy);
 }
  
-void BuildTree(int si , int ss , int se, vector<int>& Tree,vector<int>& lazy,vector<int>& a) {
+void BuildTree(ll si , ll ss , ll se,vector<ll>& a, vector<ll>& Tree, vector<ll>& Lazy) {
         if(ss == se) {
             Tree[si] = a[ss];
             return;
         }
-        int mid = (ss+se)>>1;
-        BuildTree(2*si, ss , mid, Tree,lazy,a);
-        BuildTree(2*si+1, mid+1 , se, Tree,lazy,a);
+        ll mid = (ss+se)>>1;
+        BuildTree(2*si, ss , mid,a,Tree, Lazy);
+        BuildTree(2*si+1, mid+1 , se, a, Tree, Lazy);
         Tree[si] = Tree[2*si]+Tree[2*si+1];
         return;
 }
+ 
